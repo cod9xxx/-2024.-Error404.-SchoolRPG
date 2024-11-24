@@ -3,8 +3,9 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "безымянный.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "file.lastUsedOpenFilter": "Все файлы (*)",
     "fileStates": {
@@ -12,13 +13,27 @@
             "scaleInDock": 0.33
         },
         "map.tsx": {
-            "dynamicWrapping": false
+            "dynamicWrapping": false,
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1
         },
         "objects.tsx": {
-            "dynamicWrapping": true
+            "dynamicWrapping": true,
+            "scaleInDock": 0.125,
+            "scaleInEditor": 1
         },
         "water.tsx": {
-            "dynamicWrapping": false
+            "dynamicWrapping": false,
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "безымянный.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 976,
+                "y": -1276
+            }
         }
     },
     "last.imagePath": "D:/",
@@ -27,9 +42,17 @@
     "map.tileHeight": 64,
     "map.tileWidth": 64,
     "openFiles": [
+        "безымянный.tmx",
+        "map.tsx",
+        "water.tsx",
+        "objects.tsx"
     ],
     "project": "school_map.tiled-project",
     "recentFiles": [
+        "objects.tsx",
+        "water.tsx",
+        "map.tsx",
+        "безымянный.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
