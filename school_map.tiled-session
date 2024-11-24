@@ -1,0 +1,40 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "Все файлы (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 0.33
+        },
+        "map.tsx": {
+            "dynamicWrapping": false
+        },
+        "objects.tsx": {
+            "dynamicWrapping": true
+        },
+        "water.tsx": {
+            "dynamicWrapping": false
+        }
+    },
+    "last.imagePath": "D:/",
+    "map.height": 120,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 64,
+    "map.tileWidth": 64,
+    "openFiles": [
+    ],
+    "project": "school_map.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 64,
+        "width": 64
+    },
+    "tileset.type": 1
+}
