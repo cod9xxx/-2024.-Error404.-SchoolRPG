@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="64" tileheight="64" infinite="0" nextlayerid="8" nextobjectid="17">
+ <tileset firstgid="1" source="interior_walls.tsx"/>
+ <tileset firstgid="163" source="doors.tsx"/>
+ <tileset firstgid="343" source="interior_furniture2.tsx"/>
+ <layer id="1" name="floor" width="10" height="10">
+  <data encoding="csv">
+20,21,22,21,22,21,22,21,22,23,
+38,39,40,39,40,39,40,39,40,41,
+56,57,58,57,58,57,58,57,58,41,
+38,57,58,57,58,57,58,57,58,59,
+74,75,76,75,76,75,76,75,76,77,
+110,111,112,111,112,111,112,111,112,113,
+110,111,112,111,112,111,112,111,112,113,
+110,111,111,112,111,112,111,112,112,113,
+110,111,111,111,111,111,111,111,111,113,
+128,129,130,129,130,129,130,129,130,131
+</data>
+ </layer>
+ <layer id="4" name="doors_windows" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,223,224,0,171,172,0,0,
+0,0,0,241,242,0,189,190,0,0,
+0,0,0,0,0,0,207,208,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="furniture" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,169,170,0,0,
+397,398,399,0,0,0,187,188,0,440,
+410,411,412,0,0,0,205,206,0,453,
+423,424,425,0,0,0,0,0,0,466,
+445,446,0,379,380,381,0,0,0,0,
+458,459,0,392,393,394,0,0,351,0,
+471,472,0,0,0,0,0,369,370,371,
+0,0,0,0,0,0,0,382,383,384
+</data>
+ </layer>
+ <objectgroup id="6" name="collisions">
+  <object id="5" name="library" x="6.66667" y="193.333" width="181.333" height="200"/>
+  <object id="7" name="homework" x="430.667" y="469.333" width="201.333" height="160"/>
+  <object id="8" name="exit" x="384" y="117.333" width="128" height="237.333"/>
+  <object id="9" name="barier" x="-2.66667" y="-2.66667" width="8" height="645.333"/>
+  <object id="11" name="barier" x="-6.66667" y="624" width="648" height="17.3333"/>
+  <object id="12" name="barier" x="633.333" y="1.33333" width="10.6667" height="642.667"/>
+  <object id="14" name="barier" x="186.667" y="301.333" width="448" height="16"/>
+  <object id="15" name="lamp" x="581.333" y="201.333" width="53.3333" height="173.333"/>
+  <object id="16" name="bed" x="6.66667" y="392" width="85.3333" height="157.333"/>
+ </objectgroup>
+ <objectgroup id="7" name="entities">
+  <object id="1" name="player" x="449.333" y="329.333">
+   <properties>
+    <property name="pos" value="enterance"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="2" name="player" x="133.333" y="393.333">
+   <properties>
+    <property name="pos" value="after_studying"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="3" name="player" x="480" y="494.667">
+   <properties>
+    <property name="pos" value="after_homework"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
+</map>
