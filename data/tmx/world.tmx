@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="120" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="637">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="120" tilewidth="64" tileheight="64" infinite="0" nextlayerid="20" nextobjectid="649">
  <tileset firstgid="1" source="map.tsx"/>
  <tileset firstgid="211" source="objects.tsx"/>
  <tileset firstgid="245" source="water.tsx"/>
@@ -260,8 +260,9 @@
   </object>
  </objectgroup>
  <objectgroup id="10" name="entities">
-  <object id="583" name="player" x="862" y="7130">
+  <object id="583" name="player" x="963.333" y="7182">
    <properties>
+    <property name="direction" value="up"/>
     <property name="pos" value="autumn_first_lesson"/>
    </properties>
    <point/>
@@ -279,303 +280,120 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="9" name="lessons_and_tests_collisions">
-  <object id="498" x="834.667" y="7118.67" width="62.6667" height="30.6667">
-   <ellipse/>
-  </object>
-  <object id="500" x="961.333" y="7054.67" width="62.6667" height="32">
-   <ellipse/>
-  </object>
-  <object id="501" x="1092" y="6993.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="502" x="1217.33" y="6865.33" width="64" height="26.6667">
-   <ellipse/>
-  </object>
-  <object id="503" x="1090.67" y="6801.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="504" x="960" y="6737.33" width="65.3333" height="28">
-   <ellipse/>
-  </object>
-  <object id="505" x="836" y="6673.33" width="58.6667" height="28">
-   <ellipse/>
-  </object>
-  <object id="507" x="706.667" y="6609.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="509" x="643.333" y="6486" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="510" x="770" y="6416.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="511" x="898" y="6355.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="512" x="1026" y="6290" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="513" x="1147.33" y="6224.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="514" x="1216.67" y="6094" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="515" x="1091.33" y="6032.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="516" x="964.667" y="5970" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="517" x="839.333" y="5904.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="518" x="703.333" y="5838" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="519" x="644.667" y="5710" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="520" x="771.333" y="5647.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="521" x="898" y="5012.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="522" x="771.333" y="4944.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="523" x="646" y="4816.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="524" x="770" y="4752.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="525" x="892.667" y="4688.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="526" x="1027.33" y="4624.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="527" x="1152.67" y="4554" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="528" x="1219.33" y="4431.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="529" x="1092.67" y="4374" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="530" x="963.333" y="4302" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="531" x="832.667" y="4240.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="532" x="706" y="4175.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="533" x="639.333" y="4044.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="534" x="776.667" y="3986" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="535" x="896.667" y="3922" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="536" x="1026" y="3856.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="537" x="1155.33" y="3794" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="538" x="1216.67" y="3663.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="539" x="1083.33" y="3598" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="540" x="959.333" y="3535.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="541" x="835.333" y="3471.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="542" x="702" y="3410" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="543" x="644.667" y="3280.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="544" x="771.333" y="3214" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="545" x="900.667" y="3152.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="547" x="1024.67" y="3092.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="548" x="896.667" y="2387.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="549" x="1027.33" y="2320.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="550" x="1156.67" y="2258" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="551" x="1214" y="2130" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="552" x="1094" y="2066" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="553" x="962" y="2000.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="554" x="835.333" y="1936.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="558" x="708.667" y="1874" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="559" x="643.333" y="1746" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="560" x="771.333" y="1682" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="561" x="898" y="1615.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="562" x="1023.33" y="1551.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="563" x="1152.67" y="1490" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="564" x="1215.33" y="1360.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="565" x="1092.67" y="1296.67" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="566" x="963.333" y="1230" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="567" x="836.667" y="1171.33" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="568" x="708.667" y="1106" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="569" x="640.667" y="978" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="570" x="771.333" y="911.333" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="571" x="898" y="846" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="572" x="1023.33" y="782" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="573" x="1158" y="720.667" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="576" x="1220.67" y="594" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="577" x="1088.67" y="531.333" width="60" height="28">
-   <ellipse/>
-  </object>
-  <object id="578" name="final_test" x="645.333" y="242.667" width="636" height="185.333"/>
-  <object id="580" name="winter_test" x="644" y="2744" width="637.333" height="237.333"/>
-  <object id="582" name="autumn_test" x="648" y="5308" width="634.667" height="240"/>
- </objectgroup>
  <objectgroup id="5" name="tests">
   <object id="308" name="control_test" type="lessons" gid="226" x="727.515" y="5587.64" width="448" height="448"/>
   <object id="309" name="control_test" type="lessons" gid="227" x="733.576" y="3027.03" width="448" height="448"/>
   <object id="413" name="control_test" type="lessons" gid="225" x="733.576" y="475.515" width="448" height="448"/>
  </objectgroup>
- <objectgroup id="6" name="lessons">
-  <object id="417" name="lesson" type="lessons" gid="244" x="832" y="7168" width="64" height="64"/>
-  <object id="418" name="lesson" type="lessons" gid="244" x="960" y="7104" width="64" height="64"/>
-  <object id="419" name="lesson" type="lessons" gid="244" x="1088" y="7040" width="64" height="64"/>
-  <object id="420" name="lesson" type="lessons" gid="244" x="1216" y="6912" width="64" height="64"/>
-  <object id="421" name="lesson" type="lessons" gid="244" x="1088" y="6848" width="64" height="64"/>
-  <object id="422" name="lesson" type="lessons" gid="244" x="960" y="6784" width="64" height="64"/>
-  <object id="423" name="lesson" type="lessons" gid="244" x="832" y="6720" width="64" height="64"/>
-  <object id="424" name="lesson" type="lessons" gid="244" x="704" y="6656" width="64" height="64"/>
-  <object id="425" name="lesson" type="lessons" gid="244" x="640" y="6528" width="64" height="64"/>
-  <object id="426" name="lesson" type="lessons" gid="244" x="768" y="6464" width="64" height="64"/>
-  <object id="427" name="lesson" type="lessons" gid="244" x="896" y="6400" width="64" height="64"/>
-  <object id="428" name="lesson" type="lessons" gid="244" x="1024" y="6336" width="64" height="64"/>
-  <object id="429" name="lesson" type="lessons" gid="244" x="1152" y="6272" width="64" height="64"/>
-  <object id="430" name="lesson" type="lessons" gid="244" x="1216" y="6144" width="64" height="64"/>
-  <object id="431" name="lesson" type="lessons" gid="244" x="1088" y="6080" width="64" height="64"/>
-  <object id="432" name="lesson" type="lessons" gid="244" x="960" y="6016" width="64" height="64"/>
-  <object id="433" name="lesson" type="lessons" gid="244" x="832" y="5952" width="64" height="64"/>
-  <object id="434" name="lesson" type="lessons" gid="244" x="704" y="5888" width="64" height="64"/>
-  <object id="435" name="lesson" type="lessons" gid="244" x="640" y="5760" width="64" height="64"/>
-  <object id="436" name="lesson" type="lessons" gid="244" x="768" y="5696" width="64" height="64"/>
-  <object id="437" name="lesson" type="lessons" gid="244" x="896" y="5056" width="64" height="64"/>
-  <object id="438" name="lesson" type="lessons" gid="244" x="768" y="4992" width="64" height="64"/>
-  <object id="439" name="lesson" type="lessons" gid="244" x="640" y="4864" width="64" height="64"/>
-  <object id="440" name="lesson" type="lessons" gid="244" x="768" y="4800" width="64" height="64"/>
-  <object id="441" name="lesson" type="lessons" gid="244" x="896" y="4736" width="64" height="64"/>
-  <object id="442" name="lesson" type="lessons" gid="244" x="1024" y="4672" width="64" height="64"/>
-  <object id="443" name="lesson" type="lessons" gid="244" x="1152" y="4608" width="64" height="64"/>
-  <object id="444" name="lesson" type="lessons" gid="244" x="1216" y="4480" width="64" height="64"/>
-  <object id="445" name="lesson" type="lessons" gid="244" x="1088" y="4416" width="64" height="64"/>
-  <object id="446" name="lesson" type="lessons" gid="244" x="960" y="4352" width="64" height="64"/>
-  <object id="447" name="lesson" type="lessons" gid="244" x="832" y="4288" width="64" height="64"/>
-  <object id="448" name="lesson" type="lessons" gid="244" x="704" y="4224" width="64" height="64"/>
-  <object id="449" name="lesson" type="lessons" gid="244" x="640" y="4096" width="64" height="64"/>
-  <object id="450" name="lesson" type="lessons" gid="244" x="768" y="4032" width="64" height="64"/>
-  <object id="451" name="lesson" type="lessons" gid="244" x="896" y="3968" width="64" height="64"/>
-  <object id="452" name="lesson" type="lessons" gid="244" x="1024" y="3904" width="64" height="64"/>
-  <object id="453" name="lesson" type="lessons" gid="244" x="1152" y="3840" width="64" height="64"/>
-  <object id="454" name="lesson" type="lessons" gid="244" x="1216" y="3712" width="64" height="64"/>
-  <object id="455" name="lesson" type="lessons" gid="244" x="1088" y="3648" width="64" height="64"/>
-  <object id="456" name="lesson" type="lessons" gid="244" x="960" y="3584" width="64" height="64"/>
-  <object id="457" name="lesson" type="lessons" gid="244" x="832" y="3520" width="64" height="64"/>
-  <object id="458" name="lesson" type="lessons" gid="244" x="704" y="3456" width="64" height="64"/>
-  <object id="459" name="lesson" type="lessons" gid="244" x="640" y="3328" width="64" height="64"/>
-  <object id="460" name="lesson" type="lessons" gid="244" x="768" y="3264" width="64" height="64"/>
-  <object id="461" name="lesson" type="lessons" gid="244" x="896" y="3200" width="64" height="64"/>
-  <object id="464" name="lesson" type="lessons" gid="244" x="896" y="2432" width="64" height="64"/>
-  <object id="465" name="lesson" type="lessons" gid="244" x="1024" y="2368" width="64" height="64"/>
-  <object id="466" name="lesson" type="lessons" gid="244" x="1152" y="2304" width="64" height="64"/>
-  <object id="467" name="lesson" type="lessons" gid="244" x="1216" y="2176" width="64" height="64"/>
-  <object id="468" name="lesson" type="lessons" gid="244" x="1088" y="2112" width="64" height="64"/>
-  <object id="469" name="lesson" type="lessons" gid="244" x="960" y="2048" width="64" height="64"/>
-  <object id="470" name="lesson" type="lessons" gid="244" x="832" y="1984" width="64" height="64"/>
-  <object id="471" name="lesson" type="lessons" gid="244" x="704" y="1920" width="64" height="64"/>
-  <object id="472" name="lesson" type="lessons" gid="244" x="640" y="1792" width="64" height="64"/>
-  <object id="473" name="lesson" type="lessons" gid="244" x="768" y="1728" width="64" height="64"/>
-  <object id="474" name="lesson" type="lessons" gid="244" x="896" y="1664" width="64" height="64"/>
-  <object id="475" name="lesson" type="lessons" gid="244" x="1024" y="1600" width="64" height="64"/>
-  <object id="476" name="lesson" type="lessons" gid="244" x="1152" y="1536" width="64" height="64"/>
-  <object id="477" name="lesson" type="lessons" gid="244" x="1216" y="1408" width="64" height="64"/>
-  <object id="478" name="lesson" type="lessons" gid="244" x="1088" y="1344" width="64" height="64"/>
-  <object id="479" name="lesson" type="lessons" gid="244" x="960" y="1280" width="64" height="64"/>
-  <object id="480" name="lesson" type="lessons" gid="244" x="832" y="1216" width="64" height="64"/>
-  <object id="481" name="lesson" type="lessons" gid="244" x="704" y="1152" width="64" height="64"/>
-  <object id="482" name="lesson" type="lessons" gid="244" x="640" y="1024" width="64" height="64"/>
-  <object id="483" name="lesson" type="lessons" gid="244" x="768" y="960" width="64" height="64"/>
-  <object id="484" name="lesson" type="lessons" gid="244" x="896" y="896" width="64" height="64"/>
-  <object id="485" name="lesson" type="lessons" gid="244" x="1024" y="832" width="64" height="64"/>
-  <object id="486" name="lesson" type="lessons" gid="244" x="1152" y="768" width="64" height="64"/>
-  <object id="487" name="lesson" type="lessons" gid="244" x="1216" y="640" width="64" height="64"/>
-  <object id="488" name="lesson" type="lessons" gid="244" x="1088" y="576" width="64" height="64"/>
-  <object id="489" name="lesson" type="lessons" gid="244" x="1024" y="3136" width="64" height="64"/>
+ <objectgroup id="17" name="home">
+  <object id="639" gid="238" x="737.333" y="7632" width="448" height="448"/>
  </objectgroup>
- <objectgroup id="7" name="terrain_colisions" visible="0">
+ <objectgroup id="9" name="tests_collisions">
+  <object id="578" name="final_test" x="645.333" y="242.667" width="636" height="185.333"/>
+  <object id="580" name="winter_test" x="644" y="2744" width="637.333" height="237.333"/>
+  <object id="582" name="autumn_test" x="648" y="5308" width="634.667" height="240"/>
+  <object id="638" name="home" x="638.667" y="7278.67" width="642.667" height="370.667"/>
+ </objectgroup>
+ <objectgroup id="18" name="lessons_collisions">
+  <object id="641" x="832" y="7116" width="64" height="5.33333">
+   <properties>
+    <property name="number" value="1"/>
+    <property name="pos" value="enterance"/>
+    <property name="target" value="home"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="648" x="960" y="7048" width="64" height="5.33333">
+   <properties>
+    <property name="number" value="2"/>
+    <property name="pos" value="enterance"/>
+    <property name="target" value="home"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup id="19" name="transition">
+  <object id="647" x="760" y="7274.67" width="410.667" height="25.3333">
+   <properties>
+    <property name="pos" value="enterance"/>
+    <property name="target" value="home"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="lessons">
+  <object id="417" name="lesson" type="lessons" gid="244" x="830.667" y="7181.33" width="64" height="64"/>
+  <object id="418" name="lesson" type="lessons" gid="244" x="958.667" y="7117.33" width="64" height="64"/>
+  <object id="419" name="lesson" type="lessons" gid="244" x="1086.67" y="7053.33" width="64" height="64"/>
+  <object id="420" name="lesson" type="lessons" gid="244" x="1214.67" y="6925.33" width="64" height="64"/>
+  <object id="421" name="lesson" type="lessons" gid="244" x="1086.67" y="6861.33" width="64" height="64"/>
+  <object id="422" name="lesson" type="lessons" gid="244" x="958.667" y="6797.33" width="64" height="64"/>
+  <object id="423" name="lesson" type="lessons" gid="244" x="830.667" y="6733.33" width="64" height="64"/>
+  <object id="424" name="lesson" type="lessons" gid="244" x="702.667" y="6669.33" width="64" height="64"/>
+  <object id="425" name="lesson" type="lessons" gid="244" x="638.667" y="6541.33" width="64" height="64"/>
+  <object id="426" name="lesson" type="lessons" gid="244" x="766.667" y="6477.33" width="64" height="64"/>
+  <object id="427" name="lesson" type="lessons" gid="244" x="894.667" y="6413.33" width="64" height="64"/>
+  <object id="428" name="lesson" type="lessons" gid="244" x="1022.67" y="6349.33" width="64" height="64"/>
+  <object id="429" name="lesson" type="lessons" gid="244" x="1150.67" y="6285.33" width="64" height="64"/>
+  <object id="430" name="lesson" type="lessons" gid="244" x="1214.67" y="6157.33" width="64" height="64"/>
+  <object id="431" name="lesson" type="lessons" gid="244" x="1086.67" y="6093.33" width="64" height="64"/>
+  <object id="432" name="lesson" type="lessons" gid="244" x="958.667" y="6029.33" width="64" height="64"/>
+  <object id="433" name="lesson" type="lessons" gid="244" x="830.667" y="5965.33" width="64" height="64"/>
+  <object id="434" name="lesson" type="lessons" gid="244" x="702.667" y="5901.33" width="64" height="64"/>
+  <object id="435" name="lesson" type="lessons" gid="244" x="638.667" y="5773.33" width="64" height="64"/>
+  <object id="436" name="lesson" type="lessons" gid="244" x="766.667" y="5709.33" width="64" height="64"/>
+  <object id="437" name="lesson" type="lessons" gid="244" x="894.667" y="5069.33" width="64" height="64"/>
+  <object id="438" name="lesson" type="lessons" gid="244" x="766.667" y="5005.33" width="64" height="64"/>
+  <object id="439" name="lesson" type="lessons" gid="244" x="638.667" y="4877.33" width="64" height="64"/>
+  <object id="440" name="lesson" type="lessons" gid="244" x="766.667" y="4813.33" width="64" height="64"/>
+  <object id="441" name="lesson" type="lessons" gid="244" x="894.667" y="4749.33" width="64" height="64"/>
+  <object id="442" name="lesson" type="lessons" gid="244" x="1022.67" y="4685.33" width="64" height="64"/>
+  <object id="443" name="lesson" type="lessons" gid="244" x="1150.67" y="4621.33" width="64" height="64"/>
+  <object id="444" name="lesson" type="lessons" gid="244" x="1214.67" y="4493.33" width="64" height="64"/>
+  <object id="445" name="lesson" type="lessons" gid="244" x="1086.67" y="4429.33" width="64" height="64"/>
+  <object id="446" name="lesson" type="lessons" gid="244" x="958.667" y="4365.33" width="64" height="64"/>
+  <object id="447" name="lesson" type="lessons" gid="244" x="830.667" y="4301.33" width="64" height="64"/>
+  <object id="448" name="lesson" type="lessons" gid="244" x="702.667" y="4237.33" width="64" height="64"/>
+  <object id="449" name="lesson" type="lessons" gid="244" x="638.667" y="4109.33" width="64" height="64"/>
+  <object id="450" name="lesson" type="lessons" gid="244" x="766.667" y="4045.33" width="64" height="64"/>
+  <object id="451" name="lesson" type="lessons" gid="244" x="894.667" y="3981.33" width="64" height="64"/>
+  <object id="452" name="lesson" type="lessons" gid="244" x="1022.67" y="3917.33" width="64" height="64"/>
+  <object id="453" name="lesson" type="lessons" gid="244" x="1150.67" y="3853.33" width="64" height="64"/>
+  <object id="454" name="lesson" type="lessons" gid="244" x="1214.67" y="3725.33" width="64" height="64"/>
+  <object id="455" name="lesson" type="lessons" gid="244" x="1086.67" y="3661.33" width="64" height="64"/>
+  <object id="456" name="lesson" type="lessons" gid="244" x="958.667" y="3597.33" width="64" height="64"/>
+  <object id="457" name="lesson" type="lessons" gid="244" x="830.667" y="3533.33" width="64" height="64"/>
+  <object id="458" name="lesson" type="lessons" gid="244" x="702.667" y="3469.33" width="64" height="64"/>
+  <object id="459" name="lesson" type="lessons" gid="244" x="638.667" y="3341.33" width="64" height="64"/>
+  <object id="460" name="lesson" type="lessons" gid="244" x="766.667" y="3277.33" width="64" height="64"/>
+  <object id="461" name="lesson" type="lessons" gid="244" x="894.667" y="3213.33" width="64" height="64"/>
+  <object id="464" name="lesson" type="lessons" gid="244" x="894.667" y="2445.33" width="64" height="64"/>
+  <object id="465" name="lesson" type="lessons" gid="244" x="1022.67" y="2381.33" width="64" height="64"/>
+  <object id="466" name="lesson" type="lessons" gid="244" x="1150.67" y="2317.33" width="64" height="64"/>
+  <object id="467" name="lesson" type="lessons" gid="244" x="1214.67" y="2189.33" width="64" height="64"/>
+  <object id="468" name="lesson" type="lessons" gid="244" x="1086.67" y="2125.33" width="64" height="64"/>
+  <object id="469" name="lesson" type="lessons" gid="244" x="958.667" y="2061.33" width="64" height="64"/>
+  <object id="470" name="lesson" type="lessons" gid="244" x="830.667" y="1997.33" width="64" height="64"/>
+  <object id="471" name="lesson" type="lessons" gid="244" x="702.667" y="1933.33" width="64" height="64"/>
+  <object id="472" name="lesson" type="lessons" gid="244" x="638.667" y="1805.33" width="64" height="64"/>
+  <object id="473" name="lesson" type="lessons" gid="244" x="766.667" y="1741.33" width="64" height="64"/>
+  <object id="474" name="lesson" type="lessons" gid="244" x="894.667" y="1677.33" width="64" height="64"/>
+  <object id="475" name="lesson" type="lessons" gid="244" x="1022.67" y="1613.33" width="64" height="64"/>
+  <object id="476" name="lesson" type="lessons" gid="244" x="1150.67" y="1549.33" width="64" height="64"/>
+  <object id="477" name="lesson" type="lessons" gid="244" x="1214.67" y="1421.33" width="64" height="64"/>
+  <object id="478" name="lesson" type="lessons" gid="244" x="1086.67" y="1357.33" width="64" height="64"/>
+  <object id="479" name="lesson" type="lessons" gid="244" x="958.667" y="1293.33" width="64" height="64"/>
+  <object id="480" name="lesson" type="lessons" gid="244" x="830.667" y="1229.33" width="64" height="64"/>
+  <object id="481" name="lesson" type="lessons" gid="244" x="702.667" y="1165.33" width="64" height="64"/>
+  <object id="482" name="lesson" type="lessons" gid="244" x="638.667" y="1037.33" width="64" height="64"/>
+  <object id="483" name="lesson" type="lessons" gid="244" x="766.667" y="973.333" width="64" height="64"/>
+  <object id="484" name="lesson" type="lessons" gid="244" x="894.667" y="909.333" width="64" height="64"/>
+  <object id="485" name="lesson" type="lessons" gid="244" x="1022.67" y="845.333" width="64" height="64"/>
+  <object id="486" name="lesson" type="lessons" gid="244" x="1150.67" y="781.333" width="64" height="64"/>
+  <object id="487" name="lesson" type="lessons" gid="244" x="1214.67" y="653.333" width="64" height="64"/>
+  <object id="488" name="lesson" type="lessons" gid="244" x="1086.67" y="589.333" width="64" height="64"/>
+  <object id="489" name="lesson" type="lessons" gid="244" x="1022.67" y="3149.33" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="7" name="terrain_collisions" visible="0">
   <object id="492" x="576" y="2" width="60" height="7674"/>
   <object id="494" x="1284" y="4" width="62" height="7668"/>
  </objectgroup>
@@ -686,7 +504,6 @@
   <object id="130" gid="236" x="1610" y="5762" width="64" height="128"/>
   <object id="131" gid="236" x="1630" y="5460" width="64" height="128"/>
   <object id="132" gid="236" x="1572" y="5298" width="64" height="128"/>
-  <object id="134" gid="238" x="733" y="7651" width="448" height="448"/>
   <object id="136" gid="217" x="416" y="5854" width="64" height="104"/>
   <object id="137" gid="230" x="488" y="6124" width="64" height="64"/>
   <object id="138" gid="230" x="106" y="6002" width="64" height="64"/>

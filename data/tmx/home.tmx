@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="64" tileheight="64" infinite="0" nextlayerid="8" nextobjectid="17">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="64" tileheight="64" infinite="0" nextlayerid="10" nextobjectid="50">
  <tileset firstgid="1" source="interior_walls.tsx"/>
  <tileset firstgid="163" source="doors.tsx"/>
  <tileset firstgid="343" source="interior_furniture2.tsx"/>
@@ -36,28 +36,36 @@
 0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,169,170,0,0,
-397,398,399,0,0,0,187,188,0,440,
-410,411,412,0,0,0,205,206,0,453,
-423,424,425,0,0,0,0,0,0,466,
-445,446,0,379,380,381,0,0,0,0,
-458,459,0,392,393,394,0,0,351,0,
-471,472,0,0,0,0,0,369,370,371,
-0,0,0,0,0,0,0,382,383,384
+0,0,397,398,399,0,187,188,0,0,
+0,0,410,411,412,0,205,206,0,0,
+499,500,423,424,425,0,0,0,0,0,
+512,513,0,379,380,381,0,0,0,0,
+525,526,0,392,393,394,0,0,351,0,
+538,539,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
  <objectgroup id="6" name="collisions">
-  <object id="5" name="library" x="6.66667" y="193.333" width="181.333" height="200"/>
-  <object id="7" name="homework" x="430.667" y="469.333" width="201.333" height="160"/>
-  <object id="8" name="exit" x="384" y="117.333" width="128" height="237.333"/>
-  <object id="9" name="barier" x="-2.66667" y="-2.66667" width="8" height="645.333"/>
-  <object id="11" name="barier" x="-6.66667" y="624" width="648" height="17.3333"/>
+  <object id="5" name="library" x="134.667" y="147.333" width="176.333" height="159"/>
+  <object id="7" name="homework" x="453.667" y="510.333" width="178.333" height="119"/>
+  <object id="8" name="exit" x="384" y="59.333" width="128" height="201.333"/>
+  <object id="9" name="barier" x="0.33333" y="-2.66667" width="10" height="645.333"/>
+  <object id="11" name="barier" x="-6.66667" y="616" width="648" height="25.3333"/>
   <object id="12" name="barier" x="633.333" y="1.33333" width="10.6667" height="642.667"/>
-  <object id="14" name="barier" x="186.667" y="301.333" width="448" height="16"/>
-  <object id="15" name="lamp" x="581.333" y="201.333" width="53.3333" height="173.333"/>
-  <object id="16" name="bed" x="6.66667" y="392" width="85.3333" height="157.333"/>
+  <object id="14" name="barier" x="190.667" y="246.333" width="448" height="16"/>
+  <object id="17" x="511" y="443" width="53" height="67"/>
+  <object id="23" x="5" y="314" width="82" height="326"/>
+ </objectgroup>
+ <objectgroup id="8" name="transitions">
+  <object id="19" x="386" y="258" width="126" height="6">
+   <properties>
+    <property name="pos" value="autumn_first_lesson"/>
+    <property name="target" value="world"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="7" name="entities">
-  <object id="1" name="player" x="449.333" y="329.333">
+  <object id="1" name="player" x="448.333" y="376.333">
    <properties>
     <property name="pos" value="enterance"/>
    </properties>
@@ -75,5 +83,18 @@
    </properties>
    <point/>
   </object>
+ </objectgroup>
+ <objectgroup id="9" name="furniture_obj">
+  <object id="24" gid="440" x="0" y="512" width="64" height="64"/>
+  <object id="25" gid="453" x="0" y="576" width="64" height="64"/>
+  <object id="26" gid="466" x="0" y="640" width="64" height="64"/>
+  <object id="29" gid="369" x="448" y="576" width="64" height="64"/>
+  <object id="30" gid="370" x="512" y="576" width="64" height="64"/>
+  <object id="31" gid="371" x="576" y="576" width="64" height="64"/>
+  <object id="32" gid="384" x="576" y="640" width="64" height="64"/>
+  <object id="33" gid="383" x="512" y="640" width="64" height="64"/>
+  <object id="34" gid="382" x="448" y="640" width="64" height="64"/>
+  <object id="35" gid="564" x="576" y="576" width="64" height="64"/>
+  <object id="36" gid="551" x="576" y="512" width="64" height="64"/>
  </objectgroup>
 </map>

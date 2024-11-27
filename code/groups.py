@@ -10,5 +10,10 @@ class AllSprites(pygame.sprite.Group):
         self.offset.x = -(player_center[0] - WINDOW_WIDTH / 2)
         self.offset.y = -(player_center[1] - WINDOW_HEIGHT / 2)
 
-        for sprite in self:
-            self.display_surface.blit(sprite.image, sprite.rect.topleft + self.offset)
+        bg_sprites = [sprite for sprite in self if sprite.z < WORLD_LAYERS['main']]
+        main_sprites = sorted([sprite for sprite in self if sprite.z == WORLD_LAYERS['main']], key = lambda sprite: sprite.y_sort)
+        fg_sprites = [sprite for sprite in self if sprite.z > WORLD_LAYERS['main']]
+
+        for layer in (bg_sprites, main_sprites, fg_sprites):
+            for sprite in self:
+                self.display_surface.blit(sprite.image, sprite.rect.topleft + self.offset)
