@@ -16,7 +16,7 @@ WORLD_LAYERS = {
 }
 
 BATTLE_POSITIONS = {
-	'left': {'top': (360, 260), 'center': (190, 400), 'bottom': (410, 520)},
+	'left': {'top': (360, 260), 'bottom': (410, 520)},
 	'right': {'top': (900, 260), 'center': (1110, 390), 'bottom': (900, 550)}
 }
 
@@ -35,5 +35,26 @@ COLORS = {
 	'red': '#f03131',
 	'blue': '#66d7ee',
 	'normal': '#ffffff',
-	'dark white': '#f0f0f0'
+	'dark white': '#f0f0f0',
+	'brown': '#8B4513'
+}
+
+BATTLE_LAYERS = {
+	'outline': 0,
+	'name': 1,
+	'monster': 2,
+	'effects': 3,
+	'overlay': 4
+}
+
+BATTLE_CHOICES = {
+	'full': {
+		'fight': {'pos': vector(40, -20), 'icon': 'sword'},
+		'defend': {'pos': vector(40, 20), 'icon': 'shield'},
+	},
+
+	'limited': {
+		'fight': {'pos': vector(30, -40), 'icon': 'sword'},
+		'defend': {'pos': vector(30, 40), 'icon': 'shield'},
+	}
 }

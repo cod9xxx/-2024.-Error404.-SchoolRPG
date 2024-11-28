@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ruGPT-3.5-13B" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ruT5-base" vcs="Git" />
   </component>
 </project>

@@ -4,7 +4,7 @@ from sys import exit
 from pytmx.util_pygame import load_pygame
 from os.path import join
 
-from sprites import Sprite, AnimatedSprite, BorderSprite, ColidableSprite, TrasitionSprite
+from sprites import Sprite, AnimatedSprite, BorderSprite, ColidableSprite, TransitionSprite
 from entities import Player
 from groups import AllSprites
 
@@ -13,6 +13,9 @@ from game_data import *
 from monster import Monster
 from monster_index import MonsterIndex
 from battle import Battle
+
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+
 
 class Game:
     def __init__(self):
@@ -23,18 +26,14 @@ class Game:
 
         # player and fairy
         self.player_monsters = {
-            0: Monster('Player', 30),
-            1: Monster('Plumette', 30),
-            2: Monster('Finsta', 30),
+            0: Monster('Игрок', 30),
+            1: Monster('Фея', 24),
         }
 
         self.dummy_monsters = {
-            0: Monster('Plumette', 30),
-            1: Monster('Finsta', 30),
-            2: Monster('Pouch', 30),
-            3: Monster('Draem', 30),
-            4: Monster('Atrox', 30),
-            5: Monster('Charmadillo', 30),
+            0: Monster('КвадратоСлайм', 4),
+            1: Monster('КубоСлайм', 5),
+            2: Monster('МагТематик', 3),
         }
 
         # groups
@@ -63,6 +62,12 @@ class Game:
         self.index_open = False
         self.battle = None
 
+        # AI
+        self.tokenizer = AutoTokenizer.from_pretrained("ai-forever/ruT5-base")
+        self.model = AutoModelForSeq2SeqLM.from_pretrained("ai-forever/ruT5-base")
+        self.isAI = False
+        self.user_text = ''
+
     def import_assets(self):
         self.tmx_maps = {
             'world': load_pygame('data/tmx/world.tmx'),
@@ -71,8 +76,11 @@ class Game:
 
         self.monster_frames = {
             'icons': import_folder_dict('graphics/icons'),
-            'monsters': import_folder_dict('graphics/monsters')
+            'monsters': monster_importer(4, 2, 'graphics/monsters'),
+            'ui': import_folder_dict('graphics/ui'),
+            'attacks': attack_importer('graphics/attacks')
         }
+        self.monster_frames['outlines'] = outline_creator(self.monster_frames['monsters'], 4)
 
         self.overworld_frames = {
             'water': import_folder('graphics/tilesets/water'),
@@ -88,7 +96,6 @@ class Game:
         }
         self.bg_frames = import_folder_dict('graphics/backgrounds')
 
-
     def setup(self, tmx_map, player_start_pos):
         # clear the map
         for group in (self.all_sprites, self.collision_sprites, self.transition_sprites, self.colidable_sprites):
@@ -103,10 +110,10 @@ class Game:
                 BorderSprite((obj.x, obj.y), pygame.Surface((obj.width, obj.height)),
                              self.collision_sprites)
             for obj in tmx_map.get_layer_by_name('lessons_collisions'):
-                ColidableSprite((obj.x, obj.y), (obj.width, obj.height), (obj.properties['number'], obj.properties['pos'],
-                                                                          obj.properties['target']),
+                ColidableSprite((obj.x, obj.y), (obj.width, obj.height),
+                                (obj.properties['number'], obj.properties['pos'],
+                                 obj.properties['target']),
                                 self.colidable_sprites)
-
 
             # terrain
             for x, y, surf in tmx_map.get_layer_by_name('floor').tiles():
@@ -134,7 +141,8 @@ class Game:
 
             # transition objects
             for obj in tmx_map.get_layer_by_name('transition'):
-                TrasitionSprite((obj.x, obj.y), (obj.width, obj.height), (obj.properties['target'], obj.properties['pos']),
+                TransitionSprite((obj.x, obj.y), (obj.width, obj.height),
+                                (obj.properties['target'], obj.properties['pos']),
                                 self.transition_sprites)
 
             # school_stuff
@@ -182,14 +190,18 @@ class Game:
                 BorderSprite((obj.x, obj.y), pygame.Surface((obj.width, obj.height)),
                              self.collision_sprites)
             for obj in tmx_map.get_layer_by_name('transitions'):
-                TrasitionSprite((obj.x, obj.y), (obj.width, obj.height), (obj.properties['target'], obj.properties['pos']),
+                TransitionSprite((obj.x, obj.y), (obj.width, obj.height),
+                                (obj.properties['target'], obj.properties['pos']),
                                 self.transition_sprites)
 
     # input
     def input(self):
         keys = pygame.key.get_just_pressed()
-        if keys[pygame.K_RETURN]:
+        if keys[pygame.K_BACKSLASH]:
             self.index_open = not self.index_open
+            self.player.blocked = not self.player.blocked
+        if keys[pygame.K_TAB]:
+            self.isAI = not self.isAI
             self.player.blocked = not self.player.blocked
 
 
@@ -198,7 +210,7 @@ class Game:
         sprites = [sprite for sprite in self.transition_sprites if sprite.rect.colliderect(self.player.hitbox)]
         if sprites:
             self.transition_target = sprites[0].target
-            self.tint_mode = ('tint')
+            self.tint_mode = 'tint'
 
     def tint_screen(self, dt):
         if self.tint_mode == 'untint':
@@ -223,22 +235,39 @@ class Game:
     def collide_window(self, colidable_target):
         # title
         self.colidable_target = colidable_target
-        self.big_text_surf = self.fonts['title'].render(f'Урок {self.colidable_target[0]}: {LESSONS_INFO[self.colidable_target[0]]}', False,
-                                             'White')
+        self.big_text_surf = self.fonts['title'].render(
+            f'Урок {self.colidable_target[0]}: {LESSONS_INFO[self.colidable_target[0]]}', False,
+            'White')
         self.big_text_rect = self.big_text_surf.get_rect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 5))
-        pygame.draw.rect(self.display_surface, 'black', self.big_text_rect)
+        pygame.draw.rect(self.display_surface, COLORS['gray'], self.big_text_rect, 0, 12)
         self.display_surface.blit(self.big_text_surf, self.big_text_rect)
 
         # press f to start
         self.small_text_surf = self.fonts['text'].render('Нажмите F чтобы начать', False,
-                                             'White')
+                                                         'white')
         self.small_text_rect = self.small_text_surf.get_rect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4))
-        pygame.draw.rect(self.display_surface, 'black', self.small_text_rect)
+        pygame.draw.rect(self.display_surface, COLORS['gray'], self.small_text_rect, 0, 12)
         self.display_surface.blit(self.small_text_surf, self.small_text_rect)
         keys = pygame.key.get_just_pressed()
         if keys[pygame.K_f]:
             self.battle = Battle(self.player_monsters, self.dummy_monsters, self.monster_frames,
-                                 self.bg_frames['forest'], self.fonts)
+                                 self.bg_frames['forest'], self.fonts, self.tokenizer, self.model)
+            self.player.blocked = True
+
+    def draw_ai(self):
+        if self.isAI:
+            font = pygame.font.Font('data/fonts/arialmt.ttf', 24)
+            ai_surf = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
+            ai_surf.fill(COLORS['brown'])
+            ai_rect = ai_surf.get_rect()
+            text_surf = font.render(self.user_text, True, COLORS['white'])
+            self.display_surface.blit(ai_surf, ai_rect)
+            self.display_surface.blit(text_surf, (0, 0))
+
+    def answer_ai(self, input_text, tokenizer, model):
+        inputs = tokenizer(input_text, return_tensors="pt", truncation=True, padding=True)
+        outputs = model.generate(**inputs, max_length=50, num_beams=5, early_stopping=True)
+        print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 
 
     def run(self):
@@ -247,11 +276,15 @@ class Game:
             self.display_surface.fill('black')
             for event in pygame.event.get():
                 keys = pygame.key.get_pressed()
-                if event.type == pygame.QUIT or keys[pygame.K_ESCAPE]:
+                if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-                if event.type == keys[pygame.K_h]:
-                    self.isHelp = True
+                if event.type == pygame.KEYDOWN and self.isAI:
+                    self.user_text += event.unicode
+                if keys[pygame.K_RETURN] and self.isAI:
+                    print(self.user_text)
+                    self.answer_ai(self.user_text, self.tokenizer, self.model)
+
 
             # game logic
             self.input()
@@ -264,6 +297,7 @@ class Game:
             self.collide_check()
             if self.index_open: self.monster_index.update(dt)
             if self.battle: self.battle.update(dt)
+            self.draw_ai()
 
             self.tint_screen(dt)
             pygame.display.update()
