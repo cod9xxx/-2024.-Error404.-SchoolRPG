@@ -14,8 +14,7 @@ from monster import Monster
 from monster_index import MonsterIndex
 from battle import Battle
 
-from transformers import T5Tokenizer, T5ForConditionalGeneration, pipeline
-import torch
+from gigachat import get_access_token, send_prompt
 
 
 class Game:
@@ -69,9 +68,9 @@ class Game:
         self.menu_active = False
         self.chat_history = []
         self.user_text = ''
-        self.model_name = "ruT5-base"
-        self.tokenizer = T5Tokenizer.from_pretrained(self.model_name)
-        self.model = T5ForConditionalGeneration.from_pretrained(self.model_name)
+        self.access_token = get_access_token()
+        self.scroll_offset = 0
+        self.max_scroll_offset = 0
 
     def import_assets(self):
         self.tmx_maps = {
@@ -97,7 +96,8 @@ class Game:
             'title': pygame.font.Font('data/fonts/TeletactileRus.ttf', 32),
             'text': pygame.font.Font('data/fonts/TeletactileRus.ttf', 24),
             'regular': pygame.font.Font('data/fonts/TeletactileRus.ttf', 18),
-            'small': pygame.font.Font('data/fonts/TeletactileRus.ttf', 14)
+            'small': pygame.font.Font('data/fonts/TeletactileRus.ttf', 14),
+            'small_dialog': pygame.font.Font('data/fonts/arialmt.ttf', 14)
         }
         self.bg_frames = import_folder_dict('graphics/backgrounds')
 
@@ -233,6 +233,22 @@ class Game:
         for i, line in enumerate(lines):
             self.display_surface.blit(font.render(line, True, color), (x, y + i * font.get_height()))
 
+    def draw_chat(self, x, y, width, height, font, max_messages=10):
+        padding = 10
+        message_height = font.get_height() * 2
+        max_displayable_lines = (height - 2 * padding) // message_height
+
+        current_y = y + padding
+        start_index = max(0, len(self.chat_history) - max_messages - self.scroll_offset)
+
+        # Отображаем сообщения, начиная с последнего
+        for i in range(start_index, len(self.chat_history)):
+            speaker, message = self.chat_history[i]
+            self.draw_text(f"{speaker}: {message}", x, current_y, font, COLORS['black'], max_width=width)
+            current_y += message_height
+
+        return current_y
+
     # transition check
     def transition_check(self):
         sprites = [sprite for sprite in self.transition_sprites if sprite.rect.colliderect(self.player.hitbox)]
@@ -291,16 +307,6 @@ class Game:
                 self.tint_mode = 'tint'
                 self.player.blocked = True
 
-    def answer_ai(self):
-        # Токенизация входного текста
-        input_ids = self.tokenizer.encode(self.user_text, return_tensors="pt")
-        # Генерация ответа
-        outputs = self.model.generate(input_ids, max_length=150, num_beams=5, early_stopping=True)
-        # Декодирование ответа
-        response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-        return response
-
-
     def end_battle(self):
         self.transition_target = 'level'
         self.tint_mode = 'tint'
@@ -321,12 +327,20 @@ class Game:
                         keys = pygame.key.get_pressed()
                         if keys[pygame.K_BACKSPACE]:
                             self.user_text = self.user_text[:-1]
-                        elif keys[pygame.K_RETURN]:
+                        elif keys[pygame.K_RETURN] and self.user_text != 'очистить':
                             self.chat_history.append(("Игрок", self.user_text.strip()))
                             print(self.user_text, type(self.user_text))
-                            ai_response = self.answer_ai()
+                            ai_response = send_prompt(self.user_text, self.access_token)
                             self.chat_history.append(("ИИ", ai_response))
                             self.user_text = ""
+                        elif keys[pygame.K_RETURN] and self.user_text == 'очистить':
+                            self.chat_history.clear()
+                        elif keys[pygame.K_UP]:
+                            if self.scroll_offset < self.max_scroll_offset:
+                                self.scroll_offset += 1
+                        elif keys[pygame.K_DOWN]:
+                            if self.scroll_offset > 0:
+                                self.scroll_offset -= 1
                         else:
                             self.user_text += event.unicode
 
@@ -352,23 +366,14 @@ class Game:
                 window_y = (WINDOW_HEIGHT - window_height) // 2
                 self.draw_rounded_window(pygame.Rect(window_x, window_y, window_width, window_height), COLORS['white'],
                                             radius=30)
-
-                padding = 20
-                chat_rect = pygame.Rect(window_x + padding, window_y + padding, window_width - 2 * padding,
-                                        window_height - 100)
-                current_y = chat_rect.top
-
-                for speaker, message in self.chat_history[-10:]:
-                    self.draw_text(f"{speaker}: {message}", chat_rect.left, current_y, self.fonts['small'],
-                                COLORS['black'],
-                                max_width=chat_rect.width)
-                    current_y += self.fonts['small'].get_height() * 2
-
+                chat_rect = pygame.Rect(window_x + 20, window_y + 20, window_width - 40, window_height - 100)
+                self.draw_chat(chat_rect.left, chat_rect.top, chat_rect.width, chat_rect.height,
+                            self.fonts['small_dialog'], max_messages=10)
 
                 input_rect = pygame.Rect(chat_rect.left, chat_rect.bottom + 10, chat_rect.width, 32)
                 pygame.draw.rect(self.display_surface, COLORS['white'], input_rect, border_radius=10)
                 pygame.draw.rect(self.display_surface, COLORS['black'], input_rect, width=2, border_radius=10)
-                self.draw_text(self.user_text, input_rect.left + 5, input_rect.top + 5, self.fonts['small'],
+                self.draw_text(self.user_text, input_rect.left + 5, input_rect.top + 5, self.fonts['small_dialog'],
                                 COLORS['black'])
 
             self.tint_screen(dt)
