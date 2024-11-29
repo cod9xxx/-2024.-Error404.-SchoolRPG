@@ -64,6 +64,7 @@ class Game:
         self.battle = None
 
         # AI
+        self.isAI = False
         self.tokenizer = AutoTokenizer.from_pretrained("ai-forever/ruT5-base")
         self.model = AutoModelForSeq2SeqLM.from_pretrained("ai-forever/ruT5-base")
         self.menu_active = False
@@ -278,10 +279,29 @@ class Game:
             pygame.draw.rect(shape_surf, COLORS['white'], (0, 0, *shape_rect.size), border_radius=30)
             self.display_surface.blit(shape_surf, shape_rect.topleft)
 
-    def answer_ai(self, input_text, tokenizer, model):
-        inputs = tokenizer(input_text, return_tensors="pt", truncation=True, padding=True)
-        outputs = model.generate(**inputs, max_length=50, num_beams=5, early_stopping=True)
-        print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+    # def draw_text(self):
+    #     words = self.user_text.split(" ")
+    #     lines = []
+    #     current_line = ""
+    #
+    #     for word in words:
+    #         test_line = f"{current_line} {word}".strip()
+    #         if max_width and font.size(test_line)[0] > max_width:
+    #             lines.append(current_line)
+    #             current_line = word
+    #         else:
+    #             current_line = test_line
+
+        # if current_line:
+        #     lines.append(current_line)
+        #
+        # for i, line in enumerate(lines):
+        #     surface.blit(font.render(line, True, color), (x, y + i * font.get_height()))
+
+    def answer_ai(self):
+        inputs = self.tokenizer(self.user_text, return_tensors="pt", truncation=True, padding=True)
+        outputs = self.model.generate(**inputs, max_length=50, num_beams=5, early_stopping=True)
+        print(self.tokenizer.decode(outputs[0], skip_special_tokens=True))
 
     def end_battle(self):
         self.transition_target = 'level'
@@ -300,8 +320,7 @@ class Game:
                 if event.type == pygame.KEYDOWN and self.isAI:
                     self.user_text += event.unicode
                 if keys[pygame.K_RETURN] and self.isAI:
-                    print(self.user_text)
-                    self.answer_ai(self.user_text, self.tokenizer, self.model)
+                    self.answer_ai()
 
 
             # game logic
