@@ -14,7 +14,8 @@ from monster import Monster
 from monster_index import MonsterIndex
 from battle import Battle
 
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from transformers import T5Tokenizer, T5ForConditionalGeneration, pipeline
+import torch
 
 
 class Game:
@@ -65,10 +66,12 @@ class Game:
 
         # AI
         self.isAI = False
-        self.tokenizer = AutoTokenizer.from_pretrained("ai-forever/ruT5-base")
-        self.model = AutoModelForSeq2SeqLM.from_pretrained("ai-forever/ruT5-base")
         self.menu_active = False
+        self.chat_history = []
         self.user_text = ''
+        self.model_name = "ruT5-base"
+        self.tokenizer = T5Tokenizer.from_pretrained(self.model_name)
+        self.model = T5ForConditionalGeneration.from_pretrained(self.model_name)
 
     def import_assets(self):
         self.tmx_maps = {
@@ -206,6 +209,29 @@ class Game:
             self.isAI = not self.isAI
             self.player.blocked = not self.player.blocked
 
+    def draw_rounded_window(self, rect, color, radius=20):
+        shape_surf = pygame.Surface((rect.width, rect.height), pygame.SRCALPHA)
+        pygame.draw.rect(shape_surf, color, (0, 0, *rect.size), border_radius=radius)
+        self.display_surface.blit(shape_surf, rect.topleft)
+
+    def draw_text(self, text, x, y, font, color='black', max_width=None):
+        words = text.split(" ")
+        lines = []
+        current_line = ""
+
+        for word in words:
+            test_line = f"{current_line} {word}".strip()
+            if max_width and font.size(test_line)[0] > max_width:
+                lines.append(current_line)
+                current_line = word
+            else:
+                current_line = test_line
+
+        if current_line:
+            lines.append(current_line)
+
+        for i, line in enumerate(lines):
+            self.display_surface.blit(font.render(line, True, color), (x, y + i * font.get_height()))
 
     # transition check
     def transition_check(self):
@@ -264,44 +290,16 @@ class Game:
                                      self.bg_frames['forest'], self.fonts, self.end_battle)
                 self.tint_mode = 'tint'
                 self.player.blocked = True
-    def draw_rounded_window(self):
-        if self.isAI:
-            window_width, window_height = WINDOW_WIDTH * 0.9, WINDOW_HEIGHT * 0.9
-            window_x = (WINDOW_WIDTH - window_width) // 2
-            window_y = (WINDOW_HEIGHT - window_height) // 2
-
-            overlay = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
-            overlay.fill((0, 0, 0, 150))
-            self.display_surface.blit(overlay, (0, 0))
-
-            shape_rect = pygame.Rect(window_x, window_y, window_width, window_height)
-            shape_surf = pygame.Surface((shape_rect.width, shape_rect.height), pygame.SRCALPHA)
-            pygame.draw.rect(shape_surf, COLORS['white'], (0, 0, *shape_rect.size), border_radius=30)
-            self.display_surface.blit(shape_surf, shape_rect.topleft)
-
-    # def draw_text(self):
-    #     words = self.user_text.split(" ")
-    #     lines = []
-    #     current_line = ""
-    #
-    #     for word in words:
-    #         test_line = f"{current_line} {word}".strip()
-    #         if max_width and font.size(test_line)[0] > max_width:
-    #             lines.append(current_line)
-    #             current_line = word
-    #         else:
-    #             current_line = test_line
-
-        # if current_line:
-        #     lines.append(current_line)
-        #
-        # for i, line in enumerate(lines):
-        #     surface.blit(font.render(line, True, color), (x, y + i * font.get_height()))
 
     def answer_ai(self):
-        inputs = self.tokenizer(self.user_text, return_tensors="pt", truncation=True, padding=True)
-        outputs = self.model.generate(**inputs, max_length=50, num_beams=5, early_stopping=True)
-        print(self.tokenizer.decode(outputs[0], skip_special_tokens=True))
+        # Токенизация входного текста
+        input_ids = self.tokenizer.encode(self.user_text, return_tensors="pt")
+        # Генерация ответа
+        outputs = self.model.generate(input_ids, max_length=150, num_beams=5, early_stopping=True)
+        # Декодирование ответа
+        response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        return response
+
 
     def end_battle(self):
         self.transition_target = 'level'
@@ -313,15 +311,24 @@ class Game:
             dt = self.clock.tick() / 1000
             self.display_surface.fill('black')
             for event in pygame.event.get():
-                keys = pygame.key.get_pressed()
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-                if event.type == pygame.KEYDOWN and self.isAI:
-                    self.user_text += event.unicode
-                if keys[pygame.K_RETURN] and self.isAI:
-                    self.answer_ai()
-
+                elif event.type == pygame.KEYDOWN:
+                    if event.type == pygame.K_TAB:
+                        self.isAI = not self.isAI
+                    elif self.isAI:
+                        keys = pygame.key.get_pressed()
+                        if keys[pygame.K_BACKSPACE]:
+                            self.user_text = self.user_text[:-1]
+                        elif keys[pygame.K_RETURN]:
+                            self.chat_history.append(("Игрок", self.user_text.strip()))
+                            print(self.user_text, type(self.user_text))
+                            ai_response = self.answer_ai()
+                            self.chat_history.append(("ИИ", ai_response))
+                            self.user_text = ""
+                        else:
+                            self.user_text += event.unicode
 
             # game logic
             self.input()
@@ -334,7 +341,35 @@ class Game:
             self.collide_check()
             if self.index_open: self.monster_index.update(dt)
             if self.battle: self.battle.update(dt)
-            self.draw_rounded_window()
+
+            if self.isAI:
+                overlay = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
+                overlay.fill((0, 0, 0, 150))
+                self.display_surface.blit(overlay, (0, 0))
+
+                window_width, window_height = WINDOW_HEIGHT * 0.9, WINDOW_HEIGHT * 0.7
+                window_x = (WINDOW_WIDTH - window_width) // 2
+                window_y = (WINDOW_HEIGHT - window_height) // 2
+                self.draw_rounded_window(pygame.Rect(window_x, window_y, window_width, window_height), COLORS['white'],
+                                            radius=30)
+
+                padding = 20
+                chat_rect = pygame.Rect(window_x + padding, window_y + padding, window_width - 2 * padding,
+                                        window_height - 100)
+                current_y = chat_rect.top
+
+                for speaker, message in self.chat_history[-10:]:
+                    self.draw_text(f"{speaker}: {message}", chat_rect.left, current_y, self.fonts['small'],
+                                COLORS['black'],
+                                max_width=chat_rect.width)
+                    current_y += self.fonts['small'].get_height() * 2
+
+
+                input_rect = pygame.Rect(chat_rect.left, chat_rect.bottom + 10, chat_rect.width, 32)
+                pygame.draw.rect(self.display_surface, COLORS['white'], input_rect, border_radius=10)
+                pygame.draw.rect(self.display_surface, COLORS['black'], input_rect, width=2, border_radius=10)
+                self.draw_text(self.user_text, input_rect.left + 5, input_rect.top + 5, self.fonts['small'],
+                                COLORS['black'])
 
             self.tint_screen(dt)
             pygame.display.update()

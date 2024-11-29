@@ -3,5 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ruT5-base" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rugpt3small_based_on_gpt2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rut5-small-chitchat" vcs="Git" />
   </component>
 </project>
