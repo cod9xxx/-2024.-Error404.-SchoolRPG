@@ -1,6 +1,5 @@
 LESSONS_INFO = {
-    '1': 'Линейные уравнения',
-    '2': 'Квадратные уравнения'
+    '1': 'Линейные и квадратные уравнения',
 }
 
 MONSTER_DATA = {
@@ -32,7 +31,7 @@ MONSTER_DATA = {
     'КубоСлайм': {
         'stats': {'element': 'fire', 'max_health': 18, 'max_energy': 10, 'attack': 3.5, 'defense': 10, 'recovery': 1.2,
                   'speed': 1.1},
-        'abilities': {0: 'scratch', 5: 'fire', 15: 'battlecry', 26: 'explosion'},
+        'abilities': {0: 'царапать', 5: 'fire', 15: 'battlecry', 26: 'explosion'},
         'evolve': ('Charmadillo', 33)},
     'Charmadillo': {
         'stats': {'element': 'fire', 'max_health': 29, 'max_energy': 12, 'attack': 4, 'defense': 17, 'recovery': 1.35,
@@ -62,7 +61,7 @@ MONSTER_DATA = {
     'МагТематик': {
         'stats': {'element': 'plant', 'max_health': 23, 'max_energy': 25, 'attack': 4, 'defense': 12, 'recovery': 1,
                   'speed': 1.5},
-        'abilities': {0: 'scratch', 5: 'spark', 25: 'heal'},
+        'abilities': {0: 'царапать', 5: 'spark', 25: 'heal'},
         'evolve': None},
     'Draem': {
         'stats': {'element': 'plant', 'max_health': 23, 'max_energy': 25, 'attack': 4, 'defense': 12, 'recovery': 1.2,
@@ -72,7 +71,7 @@ MONSTER_DATA = {
     'КвадратоСлайм': {
         'stats': {'element': 'plant', 'max_health': 15, 'max_energy': 17, 'attack': 1, 'defense': 8, 'recovery': 1,
                   'speed': 1},
-        'abilities': {0: 'scratch', 5: 'spark'},
+        'abilities': {0: 'царапать', 5: 'spark'},
         'evolve': ('Cleaf', 4)},
     'Cleaf': {
         'stats': {'element': 'plant', 'max_health': 18, 'max_energy': 20, 'attack': 3, 'defense': 10, 'recovery': 1.7,

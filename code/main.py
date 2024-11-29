@@ -27,13 +27,13 @@ class Game:
         # player and fairy
         self.player_monsters = {
             0: Monster('Игрок', 30),
-            1: Monster('Фея', 24),
+            1: Monster('Фея', 20),
         }
 
         self.dummy_monsters = {
-            0: Monster('КвадратоСлайм', 4),
-            1: Monster('КубоСлайм', 5),
-            2: Monster('МагТематик', 3),
+            0: Monster('КвадратоСлайм', 10),
+            1: Monster('КубоСлайм', 8),
+            2: Monster('МагТематик', 9),
         }
 
         # groups
@@ -50,6 +50,7 @@ class Game:
         self.tint_progress = 0
         self.tint_direction = -1
         self.tint_speed = 600
+        self.canColide = True
 
         # colidable lessons
         self.colidable_target = None
@@ -65,7 +66,7 @@ class Game:
         # AI
         self.tokenizer = AutoTokenizer.from_pretrained("ai-forever/ruT5-base")
         self.model = AutoModelForSeq2SeqLM.from_pretrained("ai-forever/ruT5-base")
-        self.isAI = False
+        self.menu_active = False
         self.user_text = ''
 
     def import_assets(self):
@@ -218,7 +219,14 @@ class Game:
         if self.tint_mode == 'tint':
             self.tint_progress += self.tint_speed * dt
             if self.tint_progress >= 255:
-                self.setup(self.tmx_maps[self.transition_target[0]], self.transition_target[1])
+                if type(self.transition_target) == Battle:
+                    self.battle = self.transition_target
+                    self.canColide = False
+                elif self.transition_target == 'level':
+                    self.battle = None
+                    self.canColide = True
+                else:
+                    self.setup(self.tmx_maps[self.transition_target[0]], self.transition_target[1])
                 self.tint_mode = 'untint'
                 self.transition_target = None
 
@@ -233,42 +241,52 @@ class Game:
             self.collide_window(self.colidable_target)
 
     def collide_window(self, colidable_target):
-        # title
-        self.colidable_target = colidable_target
-        self.big_text_surf = self.fonts['title'].render(
-            f'Урок {self.colidable_target[0]}: {LESSONS_INFO[self.colidable_target[0]]}', False,
-            'White')
-        self.big_text_rect = self.big_text_surf.get_rect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 5))
-        pygame.draw.rect(self.display_surface, COLORS['gray'], self.big_text_rect, 0, 12)
-        self.display_surface.blit(self.big_text_surf, self.big_text_rect)
+        if self.canColide:
+            # title
+            self.colidable_target = colidable_target
+            self.big_text_surf = self.fonts['title'].render(
+                f'Урок {self.colidable_target[0]}: {LESSONS_INFO[self.colidable_target[0]]}', False,
+                'White')
+            self.big_text_rect = self.big_text_surf.get_rect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 5))
+            pygame.draw.rect(self.display_surface, COLORS['gray'], self.big_text_rect, 0, 12)
+            self.display_surface.blit(self.big_text_surf, self.big_text_rect)
 
-        # press f to start
-        self.small_text_surf = self.fonts['text'].render('Нажмите F чтобы начать', False,
-                                                         'white')
-        self.small_text_rect = self.small_text_surf.get_rect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4))
-        pygame.draw.rect(self.display_surface, COLORS['gray'], self.small_text_rect, 0, 12)
-        self.display_surface.blit(self.small_text_surf, self.small_text_rect)
-        keys = pygame.key.get_just_pressed()
-        if keys[pygame.K_f]:
-            self.battle = Battle(self.player_monsters, self.dummy_monsters, self.monster_frames,
-                                 self.bg_frames['forest'], self.fonts, self.tokenizer, self.model)
-            self.player.blocked = True
-
-    def draw_ai(self):
+            # press f to start
+            self.small_text_surf = self.fonts['text'].render('Нажмите F чтобы начать', False,
+                                                             'white')
+            self.small_text_rect = self.small_text_surf.get_rect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4))
+            pygame.draw.rect(self.display_surface, COLORS['gray'], self.small_text_rect, 0, 12)
+            self.display_surface.blit(self.small_text_surf, self.small_text_rect)
+            keys = pygame.key.get_just_pressed()
+            if keys[pygame.K_f] and self.transition_target != 'level':
+                self.transition_target = Battle(self.player_monsters, self.dummy_monsters, self.monster_frames,
+                                     self.bg_frames['forest'], self.fonts, self.end_battle)
+                self.tint_mode = 'tint'
+                self.player.blocked = True
+    def draw_rounded_window(self):
         if self.isAI:
-            font = pygame.font.Font('data/fonts/arialmt.ttf', 24)
-            ai_surf = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
-            ai_surf.fill(COLORS['brown'])
-            ai_rect = ai_surf.get_rect()
-            text_surf = font.render(self.user_text, True, COLORS['white'])
-            self.display_surface.blit(ai_surf, ai_rect)
-            self.display_surface.blit(text_surf, (0, 0))
+            window_width, window_height = WINDOW_WIDTH * 0.9, WINDOW_HEIGHT * 0.9
+            window_x = (WINDOW_WIDTH - window_width) // 2
+            window_y = (WINDOW_HEIGHT - window_height) // 2
+
+            overlay = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
+            overlay.fill((0, 0, 0, 150))
+            self.display_surface.blit(overlay, (0, 0))
+
+            shape_rect = pygame.Rect(window_x, window_y, window_width, window_height)
+            shape_surf = pygame.Surface((shape_rect.width, shape_rect.height), pygame.SRCALPHA)
+            pygame.draw.rect(shape_surf, COLORS['white'], (0, 0, *shape_rect.size), border_radius=30)
+            self.display_surface.blit(shape_surf, shape_rect.topleft)
 
     def answer_ai(self, input_text, tokenizer, model):
         inputs = tokenizer(input_text, return_tensors="pt", truncation=True, padding=True)
         outputs = model.generate(**inputs, max_length=50, num_beams=5, early_stopping=True)
         print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 
+    def end_battle(self):
+        self.transition_target = 'level'
+        self.tint_mode = 'tint'
+        self.player.unblock()
 
     def run(self):
         while True:
@@ -297,7 +315,7 @@ class Game:
             self.collide_check()
             if self.index_open: self.monster_index.update(dt)
             if self.battle: self.battle.update(dt)
-            self.draw_ai()
+            self.draw_rounded_window()
 
             self.tint_screen(dt)
             pygame.display.update()

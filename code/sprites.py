@@ -74,7 +74,8 @@ class MonsterSprite(pygame.sprite.Sprite):
 
         # timers
         self.timers = {
-            'remove highlight': Timer(300, func=lambda: self.set_highlight(False))
+            'remove highlight': Timer(300, func=lambda: self.set_highlight(False)),
+            'kill': Timer(600, func=self.destroy),
         }
 
     def animate(self, dt):
@@ -103,6 +104,15 @@ class MonsterSprite(pygame.sprite.Sprite):
         self.current_attack = attack
         self.monster.reduce_energy(attack)
 
+    def delayed_kill(self, new_monster):
+        if not self.timers['kill'].active:
+            self.next_monster_data = new_monster
+            self.timers['kill'].activate()
+
+    def destroy(self):
+        if self.next_monster_data:
+            self.create_monster(*self.next_monster_data)
+        self.kill()
 
     def update(self, dt):
         for timer in self.timers.values():

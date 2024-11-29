@@ -12,8 +12,12 @@ class Monster:
         self.health = self.base_stats['max_health'] * self.level
         self.energy = self.base_stats['max_energy'] * self.level
         self.initiative = 0
+        self.defending = False
 
         self.abilities = MONSTER_DATA[name]['abilities']
+
+        self.xp = 0
+        self.level_up = self.level * 150
 
     def __repr__(self):
         return f'monster: {self.name}, lvl: {self.level}'
@@ -41,6 +45,19 @@ class Monster:
             return [ability for lvl, ability in self.abilities.items() if
                     self.level >= lvl and ATTACK_DATA[ability]['cost'] < self.energy]
 
+    def update_xp(self, amount):
+        if self.level_up - self.xp > amount:
+            self.xp += amount
+        else:
+            self.level += 1
+            self.xp = amount - (self.level_up - self.xp)
+            self.level_up = self.level * 150
+
+    def stat_limiter(self):
+        self.health = max(0, min(self.health, self.get_stat('max_health')))
+        self.energy = max(0, min(self.energy, self.get_stat('max_energy')))
+
     def update(self, dt):
+        self.stat_limiter()
         if not self.paused:
             self.initiative += self.get_stat('speed') * dt
