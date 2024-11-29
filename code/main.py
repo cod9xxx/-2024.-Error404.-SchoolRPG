@@ -344,7 +344,7 @@ class Game:
                         else:
                             self.user_text += event.unicode
 
-            # game logic
+            # Game logic
             self.input()
             self.all_sprites.update(dt)
             self.transition_check()
