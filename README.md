@@ -12,8 +12,14 @@
     ```
 
 2. Установите необходимые библиотеки(pygame, pytmx) с помощью pip install
+   ```bash
+   pip install pygame pytmx
+   ```
 
 3. Запустите главный исполнительный файл main.py
+   ```bash
+   python3 main.py
+   ```
 
 ## Лицензия
 
